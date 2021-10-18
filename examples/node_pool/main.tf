@@ -19,7 +19,7 @@ locals {
 }
 
 provider "google-beta" {
-  version = "~> 3.63.0"
+  version = "~> 3.79.0"
   region  = var.region
 }
 
@@ -70,13 +70,15 @@ module "gke" {
     },
     {
       name            = "pool-03"
+      machine_type    = "n1-standard-2"
       node_locations  = "${var.region}-b,${var.region}-c"
       autoscaling     = false
       node_count      = 2
       disk_type       = "pd-standard"
-      image_type      = "COS"
       auto_upgrade    = true
       service_account = var.compute_engine_service_account
+      pod_range       = "test"
+      sandbox_enabled = true
     },
   ]
 

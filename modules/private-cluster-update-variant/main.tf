@@ -81,6 +81,11 @@ locals {
     provider = null
   }]
 
+
+  cluster_authenticator_security_group = var.authenticator_security_group == null ? [] : [{
+    security_group = var.authenticator_security_group
+  }]
+
   cluster_node_metadata_config = var.node_metadata == "UNSPECIFIED" ? [] : [{
     node_metadata = var.node_metadata
   }]
@@ -128,11 +133,11 @@ locals {
   cluster_monitoring_service                 = local.cluster_output_monitoring_service
   cluster_node_pools_names                   = local.cluster_output_node_pools_names
   cluster_node_pools_versions                = local.cluster_output_node_pools_versions
-  cluster_network_policy_enabled             = ! local.cluster_output_network_policy_enabled
-  cluster_http_load_balancing_enabled        = ! local.cluster_output_http_load_balancing_enabled
-  cluster_horizontal_pod_autoscaling_enabled = ! local.cluster_output_horizontal_pod_autoscaling_enabled
-  workload_identity_enabled                  = ! (var.identity_namespace == null || var.identity_namespace == "null")
-  cluster_workload_identity_config = ! local.workload_identity_enabled ? [] : var.identity_namespace == "enabled" ? [{
+  cluster_network_policy_enabled             = !local.cluster_output_network_policy_enabled
+  cluster_http_load_balancing_enabled        = !local.cluster_output_http_load_balancing_enabled
+  cluster_horizontal_pod_autoscaling_enabled = !local.cluster_output_horizontal_pod_autoscaling_enabled
+  workload_identity_enabled                  = !(var.identity_namespace == null || var.identity_namespace == "null")
+  cluster_workload_identity_config = !local.workload_identity_enabled ? [] : var.identity_namespace == "enabled" ? [{
     identity_namespace = "${var.project_id}.svc.id.goog" }] : [{ identity_namespace = var.identity_namespace
   }]
 

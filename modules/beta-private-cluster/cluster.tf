@@ -130,19 +130,19 @@ resource "google_container_cluster" "primary" {
 
   addons_config {
     http_load_balancing {
-      disabled = ! var.http_load_balancing
+      disabled = !var.http_load_balancing
     }
 
     horizontal_pod_autoscaling {
-      disabled = ! var.horizontal_pod_autoscaling
+      disabled = !var.horizontal_pod_autoscaling
     }
 
     network_policy_config {
-      disabled = ! var.network_policy
+      disabled = !var.network_policy
     }
 
     istio_config {
-      disabled = ! var.istio
+      disabled = !var.istio
       auth     = var.istio_auth
     }
 
@@ -234,6 +234,8 @@ resource "google_container_cluster" "primary" {
           node_metadata = workload_metadata_config.value.node_metadata
         }
       }
+
+      metadata = local.node_pools_metadata["all"]
     }
   }
 
@@ -345,6 +347,13 @@ resource "google_container_node_pool" "pools" {
     }
   }
 
+  dynamic "network_config" {
+    for_each = length(lookup(each.value, "pod_range", "")) > 0 ? [each.value] : []
+    content {
+      pod_range = lookup(network_config.value, "pod_range", null)
+    }
+  }
+
   management {
     auto_repair  = lookup(each.value, "auto_repair", true)
     auto_upgrade = lookup(each.value, "auto_upgrade", local.default_auto_upgrade)
@@ -356,7 +365,7 @@ resource "google_container_node_pool" "pools" {
   }
 
   node_config {
-    image_type   = lookup(each.value, "image_type", var.sandbox_enabled ? "COS_CONTAINERD" : "COS")
+    image_type   = lookup(each.value, "image_type", lookup(each.value, "sandbox_enabled", var.sandbox_enabled) ? "COS_CONTAINERD" : "COS")
     machine_type = lookup(each.value, "machine_type", "e2-medium")
     labels = merge(
       lookup(lookup(local.node_pools_labels, "default_values", {}), "cluster_name", true) ? { "cluster_name" = var.name } : {},
@@ -432,8 +441,7 @@ resource "google_container_node_pool" "pools" {
       }
     }
     dynamic "sandbox_config" {
-      for_each = local.cluster_sandbox_enabled
-
+      for_each = tobool((lookup(each.value, "sandbox_enabled", var.sandbox_enabled))) ? ["gvisor"] : []
       content {
         sandbox_type = sandbox_config.value
       }

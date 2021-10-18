@@ -15,10 +15,12 @@ For details on configuring private clusters with this module, check the [trouble
 
 ## Compatibility
 
-This module is meant for use with Terraform 0.12. If you haven't
-[upgraded][terraform-0.12-upgrade] and need a Terraform
-0.11.x-compatible version of this module, the last released version
-intended for Terraform 0.11.x is [3.0.0].
+This module is meant for use with Terraform 0.13+ and tested using Terraform 1.0+.
+If you find incompatibilities using Terraform `>=0.13`, please open an issue.
+
+If you haven't [upgraded][terraform-0.13-upgrade] and need a Terraform
+0.12.x-compatible version of this module, the last released version
+intended for Terraform 0.12.x is [12.3.0].
 
 ## Usage
 There are multiple examples included in the [examples](https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/tree/master/examples) folder but simple usage is as follows:
@@ -131,6 +133,7 @@ Then perform the following commands on the root folder:
 | add\_cluster\_firewall\_rules | Create additional firewall rules | `bool` | `false` | no |
 | add\_master\_webhook\_firewall\_rules | Create master\_webhook firewall rules for ports defined in `firewall_inbound_ports` | `bool` | `false` | no |
 | add\_shadow\_firewall\_rules | Create GKE shadow firewall (the same as default firewall rules with firewall logs enabled). | `bool` | `false` | no |
+| authenticator\_security\_group | The name of the RBAC security group for use with Google security groups in Kubernetes RBAC. Group name must be in format gke-security-groups@yourdomain.com | `string` | `null` | no |
 | basic\_auth\_password | The password to be used with Basic Authentication. | `string` | `""` | no |
 | basic\_auth\_username | The username to be used with Basic Authentication. An empty value will disable Basic Authentication, which is the recommended configuration. | `string` | `""` | no |
 | cluster\_autoscaling | Cluster autoscaling configuration. See [more details](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters#clusterautoscaling) | <pre>object({<br>    enabled       = bool<br>    min_cpu_cores = number<br>    max_cpu_cores = number<br>    min_memory_gb = number<br>    max_memory_gb = number<br>    gpu_resources = list(object({ resource_type = string, minimum = number, maximum = number }))<br>  })</pre> | <pre>{<br>  "enabled": false,<br>  "gpu_resources": [],<br>  "max_cpu_cores": 0,<br>  "max_memory_gb": 0,<br>  "min_cpu_cores": 0,<br>  "min_memory_gb": 0<br>}</pre> | no |
@@ -305,5 +308,5 @@ In order to operate with the Service Account you must activate the following API
 - Kubernetes Engine API - container.googleapis.com
 
 [terraform-provider-google]: https://github.com/terraform-providers/terraform-provider-google
-[3.0.0]: https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/3.0.0
-[terraform-0.12-upgrade]: https://www.terraform.io/upgrade-guides/0-12.html
+[12.3.0]: https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/12.3.0
+[terraform-0.13-upgrade]: https://www.terraform.io/upgrade-guides/0-13.html

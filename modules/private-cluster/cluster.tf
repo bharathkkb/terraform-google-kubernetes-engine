@@ -100,15 +100,15 @@ resource "google_container_cluster" "primary" {
 
   addons_config {
     http_load_balancing {
-      disabled = ! var.http_load_balancing
+      disabled = !var.http_load_balancing
     }
 
     horizontal_pod_autoscaling {
-      disabled = ! var.horizontal_pod_autoscaling
+      disabled = !var.horizontal_pod_autoscaling
     }
 
     network_policy_config {
-      disabled = ! var.network_policy
+      disabled = !var.network_policy
     }
   }
 
@@ -147,6 +147,8 @@ resource "google_container_cluster" "primary" {
           node_metadata = workload_metadata_config.value.node_metadata
         }
       }
+
+      metadata = local.node_pools_metadata["all"]
     }
   }
 
@@ -199,6 +201,13 @@ resource "google_container_cluster" "primary" {
     }
   }
 
+  dynamic "authenticator_groups_config" {
+    for_each = local.cluster_authenticator_security_group
+    content {
+      security_group = authenticator_groups_config.value.security_group
+    }
+  }
+
 }
 
 /******************************************
@@ -238,6 +247,7 @@ resource "google_container_node_pool" "pools" {
       max_node_count = lookup(autoscaling.value, "max_count", 100)
     }
   }
+
 
   management {
     auto_repair  = lookup(each.value, "auto_repair", true)

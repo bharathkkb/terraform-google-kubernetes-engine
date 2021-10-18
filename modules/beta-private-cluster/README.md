@@ -15,10 +15,12 @@ For details on configuring private clusters with this module, check the [trouble
 
 ## Compatibility
 
-This module is meant for use with Terraform 0.12. If you haven't
-[upgraded][terraform-0.12-upgrade] and need a Terraform
-0.11.x-compatible version of this module, the last released version
-intended for Terraform 0.11.x is [3.0.0].
+This module is meant for use with Terraform 0.13+ and tested using Terraform 1.0+.
+If you find incompatibilities using Terraform `>=0.13`, please open an issue.
+
+If you haven't [upgraded][terraform-0.13-upgrade] and need a Terraform
+0.12.x-compatible version of this module, the last released version
+intended for Terraform 0.12.x is [12.3.0].
 
 ## Usage
 There are multiple examples included in the [examples](https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/tree/master/examples) folder but simple usage is as follows:
@@ -292,6 +294,7 @@ The node_pools variable takes the following parameters:
 | max_unavailable | The number of nodes that can be simultaneously unavailable during an upgrade. Increasing max_unavailable raises the number of nodes that can be upgraded in parallel. Can be set to 0 or greater. | 0 | Optional |
 | min_count | Minimum number of nodes in the NodePool. Must be >=0 and <= max_count. Should be used when autoscaling is true | 1 | Optional |
 | name | The name of the node pool |  | Required |
+| pod_range |  The ID of the secondary range for pod IPs. |  | Optional |
 | node_count | The number of nodes in the nodepool when autoscaling is false. Otherwise defaults to 1. Only valid for non-autoscaling clusers |  | Required |
 | node_locations | The list of zones in which the cluster's nodes are located. Nodes must be in the region of their regional cluster or in the same region as their cluster's zone for zonal clusters. Defaults to cluster level node locations if nothing is specified | " " | Optional |
 | node_metadata | Options to expose the node metadata to the workload running on the node | | Optional |
@@ -345,5 +348,5 @@ In order to operate with the Service Account you must activate the following API
 - Kubernetes Engine API - container.googleapis.com
 
 [terraform-provider-google-beta]: https://github.com/terraform-providers/terraform-provider-google-beta
-[3.0.0]: https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/3.0.0
-[terraform-0.12-upgrade]: https://www.terraform.io/upgrade-guides/0-12.html
+[12.3.0]: https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/12.3.0
+[terraform-0.13-upgrade]: https://www.terraform.io/upgrade-guides/0-13.html

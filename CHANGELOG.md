@@ -6,6 +6,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Extending the adopted spec, each change should have a link to its corresponding pull request appended.
 
+## [17.0.0](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/compare/v16.1.0...v17.0.0) (2021-09-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* Minimum beta provider version increased to v3.79.0.
+
+### Features
+
+* Add support for gVisor per node pool ([#1001](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/1001)) ([850c418](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/850c4181ec936f08c1617e4947f85e99c4de74ee))
+* Add support for setting additional `pod_range` to beta node pools ([#984](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/984)) ([9d1274f](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/9d1274f9dc7cf3ed8d22690c7cd0fda08265da84))
+* Promote authenticator_security_group to GA modules ([#989](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/989)) ([6042fd6](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/6042fd68d4562d9ecc5b7d8b8ac0ad41f153e4b2))
+
+
+### Bug Fixes
+
+* Delete bundle.hcl ([#981](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/981)) ([b910639](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/b9106391e458a69091b497f135cfdc10efdcbdf0))
+* Use provided gcp_given_name for workload identity ([#1003](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/1003)) ([d72e595](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/d72e59510f9be06a7e183449b253af04a7ca2c98)), closes [#1002](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/1002)
+* WI GCP SA output ([#1009](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/1009)) ([b431aa5](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/b431aa5d7dc1f0809107429e0d4f19bb7c2ac83f))
+
+## [16.1.0](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/compare/v16.0.1...v16.1.0) (2021-08-14)
+
+
+### Features
+
+* add enable_namespace_creation flag for ASM module ([#968](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/968)) ([8764b76](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/8764b76a25be911501e6f30bc498fc2bda03ea84))
+
+
+### Bug Fixes
+
+* Use provided k8s service account name when setting up workload identity ([#972](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/972)) ([e00286f](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/e00286fc23b5718587d630f1766d33559608250d))
+* WI conditionally invoke data source if using external GSA ([#974](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/issues/974)) ([b208d5c](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/commit/b208d5cbd2ffd10e7889150428bb17bc1486c686))
+
 ### [16.0.1](https://www.github.com/terraform-google-modules/terraform-google-kubernetes-engine/compare/v16.0.0...v16.0.1) (2021-07-23)
 
 
